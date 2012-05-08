@@ -25,6 +25,7 @@ void transferLong(unsigned int trans){
     spi_transfer((uint8_t)trans);
 }
 void updateHorizontal(int row, volatile unsigned int displayGreen[], volatile unsigned int displayRed[]){
+    /* Bring latch pin low, send data, bring latch pin high. */
     PORTB &= ~_BV(LATCH_PIN_HOR_GREEN);
     transferLong(~displayGreen[row]);
     PORTB |= _BV(LATCH_PIN_HOR_GREEN);
@@ -34,6 +35,7 @@ void updateHorizontal(int row, volatile unsigned int displayGreen[], volatile un
     PORTB |= _BV(LATCH_PIN_HOR_RED);
 }
 void updateVertical(int row){
+    /* Bring latch pin low, send data, bring latch pin high. */
     PORTB &= ~_BV(LATCH_PIN_VERT);
     spi_transfer(1 << row);
     PORTB |= _BV(LATCH_PIN_VERT);
